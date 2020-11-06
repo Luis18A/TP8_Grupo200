@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name="detallesFacturas")
 @NamedQuery(name ="verDetallesFacturas", query="SELECT e FROM DetalleFactura e")
@@ -18,7 +21,7 @@ public class DetalleFactura implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String descripcion;
 	private double precioUnitario;
@@ -26,6 +29,7 @@ public class DetalleFactura implements Serializable{
 	private double subtotal;
 	
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="factura_id")
 	private Factura factura;
 

@@ -2,6 +2,7 @@ package ar.edu.unju.edm.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name="facturas")
 @NamedQuery(name ="verFacturas", query="SELECT e FROM Factura e")
@@ -23,18 +27,19 @@ public class Factura implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long nroFactura;
 	private LocalDate fecha;
 	private String domicilio;
 	private double total;
 	
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 
-	@OneToMany(mappedBy = "factura", fetch=FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-	private List<DetalleFactura> detallesFacturas;
+	@OneToMany(mappedBy = "factura", fetch=FetchType.EAGER, cascade= {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval=true)
+	private List<DetalleFactura> detallesFacturas = new ArrayList<DetalleFactura>();
 	
 	
 	

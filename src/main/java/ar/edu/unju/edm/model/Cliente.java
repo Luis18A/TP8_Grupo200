@@ -1,6 +1,7 @@
 package ar.edu.unju.edm.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,14 +21,14 @@ public class Cliente implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long codigo;
 	private String nombre;
 	private String apellido;
 	private String domicilio;
 	private int dni;
 	
-	@OneToMany(mappedBy = "cliente", fetch=FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(mappedBy = "cliente", fetch=FetchType.EAGER, cascade= {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval=true)
 	private List<Factura> facturas;
 	
 	
