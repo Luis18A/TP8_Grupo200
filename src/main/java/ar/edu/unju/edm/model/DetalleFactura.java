@@ -2,6 +2,7 @@ package ar.edu.unju.edm.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,8 +33,6 @@ public class DetalleFactura implements Serializable{
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="factura_id")
 	private Factura factura;
-
-	
 	
 	
 	public DetalleFactura() {

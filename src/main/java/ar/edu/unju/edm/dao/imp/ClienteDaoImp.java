@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import ar.edu.unju.edm.config.EmfSingleton;
 import ar.edu.unju.edm.dao.IClienteDao;
 import ar.edu.unju.edm.model.Cliente;
+import ar.edu.unju.edm.model.DetalleFactura;
 import ar.edu.unju.edm.model.Factura;
 
 public class ClienteDaoImp implements IClienteDao{
@@ -21,10 +22,16 @@ public class ClienteDaoImp implements IClienteDao{
 	}
 
 	@Override
-	public void borrarCliente(Cliente cliente) {
+	public void borrarCliente(Cliente cliente, Long codElim) {
 		manager.getTransaction().begin();
-//		manager.clear();
-		manager.remove(manager.merge(cliente));
+		List<Factura> todasFacturas = (List<Factura>) manager.createQuery("SELECT e FROM Factura e").getResultList();
+		for(Factura factura:todasFacturas) {
+			if(factura.getCliente().getCodigo()==codElim) {
+				manager.remove(factura);
+			}
+		}
+		
+		manager.remove(cliente);
 		manager.getTransaction().commit();
 	}
 

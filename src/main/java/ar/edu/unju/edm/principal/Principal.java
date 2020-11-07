@@ -46,11 +46,12 @@ public class Principal {
 				System.out.println("1. Agregar un cliente.");
 				System.out.println("2. Eliminar un cliente.");
 				System.out.println("3. Crear una nueva factura.");
-				System.out.println("4. Buscar una factura.");
-				System.out.println("5. Mostrar todas las facturas.");
-				System.out.println("6. Mostrar todos los clientes.");
-				System.out.println("7. Mostrar las facturas que superen el total de $1000");
-				System.out.println("8. Salir");
+				System.out.println("4. Eliminar una factura.");
+				System.out.println("5. Buscar una factura.");
+				System.out.println("6. Mostrar todas las facturas.");
+				System.out.println("7. Mostrar todos los clientes.");
+				System.out.println("8. Mostrar las facturas que superen el total de $1000");
+				System.out.println("9. Salir");
 				System.out.println("\nIngrese opción: ");
 				ing=true;
 				try {
@@ -87,44 +88,21 @@ public class Principal {
 					clienteDao.guardarCliente(cliente);
 				break;
 			case 2: 
-//					System.out.println("Ingrese código del cliente que desea eliminar: ");
-//					long codElim= sc.nextLong();
-//					
-////					 recuperar un objeto de la tabla clientes
-//					Cliente clienteEliminado = clienteDao.buscarCliente(codElim);
-//					if(clienteEliminado != null) {
-//						System.out.print("\nSe eliminará el siguiente cliente: ");
-//						System.out.println(clienteEliminado+"\n");
-						
-						
-//						if(Objects.nonNull(clienteEliminado)){
-//							List<Factura> facturas = clienteEliminado.getFacturas();
-//							for(Iterator<Factura> iterator = facturas.iterator(); iterator.hasNext();) {
-//								Factura factura = iterator.next();
-//								factura.setCliente(null);
-//								facturaDao borrarFactura(factura);
-//							}	
-//						}
-						// borrar el objeto de la tabla clientes
-//						clienteDao.borrarCliente(clienteEliminado);
-//						System.out.println("\nEl cliente fue eliminado");
-//						}else {
-//							System.out.println("\nNo existe el cliente!");
-//						}
-				
-					System.out.println("Ingrese número de la factura que desea eliminar: ");
+					System.out.println("Ingrese código del cliente que desea eliminar: ");
 					long codElim= sc.nextLong();
-
-					if(facturaDao.buscarfactura(codElim) != null) {
+					
+//					 recuperar un objeto de la tabla clientes
+					Cliente clienteEliminado = clienteDao.buscarCliente(codElim);
+					if(clienteEliminado != null) {
 						System.out.print("\nSe eliminará el siguiente cliente: ");
-						System.out.println(facturaDao.buscarfactura(codElim)+"\n");
-												
-						// borrar el objeto de la tabla clientes
-						facturaDao.borrarFactura(facturaDao.buscarfactura(codElim));
-						System.out.println("\nLa factura fue eliminada");
-					}else {
-						System.out.println("\nNo existe el cliente!");
-					}
+						System.out.println(clienteEliminado+"\n");
+		
+//						 borrar el objeto de la tabla clientes
+						clienteDao.borrarCliente(clienteDao.buscarCliente(codElim),codElim);
+						System.out.println("\nEl cliente fue eliminado");
+						}else {
+							System.out.println("\nNo existe el cliente!");
+						}
 
 				break;
 			case 3: 
@@ -198,7 +176,22 @@ public class Principal {
 						System.out.println("\nNo existe el cliente!");
 					}
 				break;
-			case 4: 
+			case 4:
+				System.out.println("Ingrese número de la factura que desea eliminar: ");
+				long nroFac= sc.nextLong();
+
+				if(facturaDao.buscarfactura(nroFac) != null) {
+					System.out.print("\nSe eliminará la siguiente factura: ");
+					System.out.println(facturaDao.buscarfactura(nroFac)+"\n");
+											
+					// borrar el objeto de la tabla clientes
+					facturaDao.borrarFactura(facturaDao.buscarfactura(nroFac),nroFac);
+					System.out.println("\nLa factura fue eliminada");
+				}else {
+					System.out.println("\nNo existe la factura!");
+				}
+				break;
+			case 5: 
 				System.out.println("Ingrese número de factura: ");
 				long nroFactura= sc.nextLong();
 				if(facturaDao.buscarfactura(nroFactura) != null) {
@@ -208,33 +201,33 @@ public class Principal {
 					System.out.println("La factura no existe");
 				}
 				break;
-			case 5: 
+			case 6: 
 				if(facturaDao.obtenerTodasFacturas().isEmpty()) {
 					System.out.println("No hay facturas cargadas!");
 				}else {
 					facturaDao.obtenerTodasFacturas().stream().forEach(System.out::println);
 				}
 				break;
-			case 6: 
+			case 7: 
 				if(clienteDao.obtenerTodosClientes().isEmpty()) {
 					System.out.println("No hay clientes cargados!");
 				}else {
 					clienteDao.obtenerTodosClientes().stream().forEach(System.out::println);
 
 				}
-//				otra opcion
+//				otra forma
 //				List<Cliente> clientes = clienteDao.obtenerTodosClientes();	
 //				for(Cliente client:clientes) {
 //						System.out.println(client);
 //					}
 				break;
-			case 7: if(facturaDao.obtenerTodasFacturas().stream().filter(f->f.getTotal()>1000).count()==0) {
+			case 8: if(facturaDao.obtenerTodasFacturas().stream().filter(f->f.getTotal()>1000).count()==0) {
 				System.out.println("No hay facturas con un total superior a $1000");
 			}else {
 				facturaDao.obtenerTodasFacturas().stream().filter(f->f.getTotal()>1000).forEach(System.out::println);
 			}
 				break;
-			case 8:System.out.println("Saliendo...");
+			case 9:System.out.println("Saliendo...");
 				break;
 			default: System.out.println("\nOpción inválida!");
 				break;

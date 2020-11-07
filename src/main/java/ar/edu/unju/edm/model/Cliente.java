@@ -28,7 +28,7 @@ public class Cliente implements Serializable{
 	private String domicilio;
 	private int dni;
 	
-	@OneToMany(mappedBy = "cliente", fetch=FetchType.EAGER, cascade= {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval=true)
+	@OneToMany(mappedBy = "cliente", fetch=FetchType.EAGER, cascade= {CascadeType.REMOVE}, orphanRemoval=true)
 	private List<Factura> facturas;
 	
 	

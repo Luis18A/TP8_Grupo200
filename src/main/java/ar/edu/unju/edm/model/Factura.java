@@ -22,7 +22,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="facturas")
-@NamedQuery(name ="verFacturas", query="SELECT e FROM Factura e")
 public class Factura implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +37,7 @@ public class Factura implements Serializable{
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 
-	@OneToMany(mappedBy = "factura", fetch=FetchType.EAGER, cascade= {CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval=true)
+	@OneToMany(mappedBy = "factura", fetch=FetchType.EAGER, cascade= {CascadeType.REMOVE}, orphanRemoval=true)
 	private List<DetalleFactura> detallesFacturas = new ArrayList<DetalleFactura>();
 	
 	
