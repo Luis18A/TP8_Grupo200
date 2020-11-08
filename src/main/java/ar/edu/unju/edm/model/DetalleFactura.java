@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,7 +18,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="detallesFacturas")
-@NamedQuery(name ="verDetallesFacturas", query="SELECT e FROM DetalleFactura e")
 public class DetalleFactura implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -29,8 +29,7 @@ public class DetalleFactura implements Serializable{
 	private int cantidad;
 	private double subtotal;
 	
-	@ManyToOne
-	@OnDelete(action = OnDeleteAction.CASCADE)
+	@ManyToOne 
 	@JoinColumn(name="factura_id")
 	private Factura factura;
 	

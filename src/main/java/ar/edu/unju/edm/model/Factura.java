@@ -33,11 +33,10 @@ public class Factura implements Serializable{
 	private double total;
 	
 	@ManyToOne
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 
-	@OneToMany(mappedBy = "factura", fetch=FetchType.EAGER, cascade= {CascadeType.REMOVE}, orphanRemoval=true)
+	@OneToMany(mappedBy = "factura", fetch=FetchType.EAGER, cascade= {CascadeType.REMOVE, CascadeType.PERSIST})
 	private List<DetalleFactura> detallesFacturas = new ArrayList<DetalleFactura>();
 	
 	
@@ -108,7 +107,7 @@ public class Factura implements Serializable{
 	@Override
 	public String toString() {
 		return "Factura [nroFactura=" + nroFactura + ", fecha=" + fecha + ", domicilio=" + domicilio + ", total="
-				+ total + ", cliente=" + cliente + ", detallesFacturas=" + detallesFacturas + "]";
+				+ total + ", cliente=" + cliente + "]";
 	}
 	
 	
