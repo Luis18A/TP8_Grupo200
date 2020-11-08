@@ -86,6 +86,7 @@ public class Principal {
 					System.out.println("Ingrese domicilio: ");
 					cliente.setDomicilio(sc.next());
 					clienteDao.guardarCliente(cliente);
+					System.out.println("El cliente se ha creado con éxito!");
 				break;
 			case 2: 
 					System.out.println("Ingrese código del cliente que desea eliminar: ");
@@ -198,7 +199,7 @@ public class Principal {
 					System.out.println(facturaDao.buscarfactura(nroFactura));
 				}
 				else {
-					System.out.println("La factura no existe");
+					System.out.println("La factura no existe!");
 				}
 				break;
 			case 6: 
